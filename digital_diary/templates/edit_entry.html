@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 style="text-align:center;">📝 Entry for {{ entry_date }}</h2>
+<div class="form-card">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <p style="text-align:center;"><a href="{% url 'calendar' %}">Back to Calendar</a></p>
+</div>
+{% endblock %}

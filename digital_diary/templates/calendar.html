@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- ✅ FullCalendar CSS - keep this at the top -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+
+<h2 style="text-align:center;">📅 My Diary Calendar</h2>
+<div id="calendar"></div>
+
+{{ events|json_script:"event-data" }}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("JS loaded ✅");
+
+        const calendarEl = document.getElementById('calendar');
+        const events = JSON.parse(document.getElementById('event-data').textContent);
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            selectable: true,
+            editable: false,
+            height: 'auto',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: ''
+            },
+            dateClick: function(info) {
+                const date = info.dateStr;
+                window.location.href = `/edit_entry/${date}/`;
+            },
+            // ✅ THIS should be OUTSIDE dateClick
+            validRange: {
+                start: '{{ dob|date:"Y-m-d" }}',
+                end: new Date().toISOString().split('T')[0]
+            },
+            events: events
+        });
+
+        calendar.render();
+    });
+</script>
+
+
+<!-- ✅ FullCalendar JS - must be loaded at the END -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+
+{% endblock %}

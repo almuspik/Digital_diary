@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Diary</title>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+
+
+    <!-- Main Style -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+
+    <style>
+
+
+    :root {
+        --primary: #6c5ce7;
+        --secondary: #00cec9;
+        --accent: #ff7675;
+        --glass: rgba(255, 255, 255, 0.25);
+        --text-dark: #2d3436;
+        --radius: 15px;
+        --blur: 12px;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #dfe6e9, #b2bec3);
+        color: var(--text-dark);
+    }
+
+    header {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+        border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+    }
+
+    nav a {
+        margin: 0 15px;
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    nav a:hover {
+        color: var(--accent);
+    }
+
+    main {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 20px;
+        background: var(--glass);
+        backdrop-filter: blur(var(--blur));
+        border-radius: var(--radius);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 15px;
+        background: var(--primary);
+        color: white;
+        border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .form-card {
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: var(--radius);
+        backdrop-filter: blur(var(--blur));
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: var(--radius);
+        margin-top: 8px;
+        margin-bottom: 16px;
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 12px 20px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #d63031;
+    }
+
+    #calendar {
+        max-width: 1100px;
+        margin: 40px auto;
+        background-color: white;
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ✅ Responsive Styles for Mobile */
+    @media screen and (max-width: 600px) {
+        body {
+            font-size: 14px;
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+        }
+
+        nav a {
+            display: block;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        main {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #calendar {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .fc-toolbar-title {
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .fc-button {
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+
+        .form-card {
+            padding: 15px;
+        }
+
+        input, select, textarea, button {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📘 Digital Diary</h1>
+        <nav>
+            <a href="{% url 'calendar' %}">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Signup</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        &copy; 2025 Digital Diary. All rights reserved.
+    </footer>
+
+</body>
+</html>
